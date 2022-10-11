@@ -43,7 +43,7 @@ export const OperationPage: React.FC = () => {
             dispatch(getBufferFileList({ jwtToken, assignmentId }));
             dispatch(getDbList({ jwtToken, assignmentId }));
         }
-    }, [jwtToken, assignmentId]);
+    }, [jwtToken, assignmentId, dispatch]);
 
     const onSetDataType = (value: string) => {
         setDataType(value);
@@ -134,7 +134,27 @@ export const OperationPage: React.FC = () => {
                     <BufferFileList assignmentId={assignmentId} loading={bufferFileLoading}
                                     bufferFileList={bufferFileList} />
                     <div className={styles.button}>
-                        <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
+                        {uploadedType !== "" ?
+                            <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
+                            : <Button type={"dashed"} icon={<UploadOutlined />}>
+                                Upload
+                            </Button>}
+                    </div>
+                    <div style={{ float: "right" }}>
+                        <Select
+                            className={styles.setter}
+                            showSearch
+                            placeholder="Set file type"
+                            onChange={onUploadedFileType}
+                            optionFilterProp="type"
+                            filterOption={(input, option) =>
+                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            <Option value=".pdf" key={1}>PDF</Option>
+                            <Option value=".java" key={2}>Java</Option>
+                            <Option value=".c" key={3}>C</Option>
+                        </Select>
                     </div>
                 </div>
             }

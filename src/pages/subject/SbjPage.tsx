@@ -4,14 +4,16 @@ import { getAllSbjList, getSbjList } from "../../redux/subject/slice";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import SbjCreator from "../../components/sbjCreator/SbjCreator";
 import { Spin } from "antd";
+import StudentAdder from "../../components/studentAdder/StudentAdder";
 
 export const SbjPage: React.FC = () => {
-
     const dispatch = useReduxDispatch();
-    const userType = useReduxSelector(s => s.authentication.userType);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const jwtToken = useReduxSelector((state) => state.authentication.jwtToken);
-    const subjectList = useReduxSelector((state) => state.subjectList.subjectList);
-    const loading = useReduxSelector(s => s.subjectList.loading);
+    const subjectList = useReduxSelector(
+        (state) => state.subjectList.subjectList
+    );
+    const loading = useReduxSelector((s) => s.subjectList.loading);
 
     useEffect(() => {
         if (jwtToken) {
@@ -21,7 +23,7 @@ export const SbjPage: React.FC = () => {
                 dispatch(getSbjList(jwtToken));
             }
         }
-    }, [jwtToken]);
+    }, [jwtToken, dispatch, userType]);
 
     if (loading) {
         return (
@@ -41,7 +43,7 @@ export const SbjPage: React.FC = () => {
     return (
         <div>
             <SbjList loading={loading} subjectList={subjectList} />
-            <SbjCreator />
+            {userType === "student" ? <StudentAdder /> : <SbjCreator />}
         </div>
     );
 };

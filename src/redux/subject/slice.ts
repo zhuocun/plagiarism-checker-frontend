@@ -21,7 +21,8 @@ export const createSbj = createAsyncThunk(
         subjectName: string,
         teacherEmail: string[]
     }) => {
-        await axios.post(`https://sc-plagiarism-checker.herokuapp.com/subject/admin`,
+        await axios.post(
+            `https://sc-plagiarism-checker.herokuapp.com/subject/admin`,
             {
                 subjectCode: parameters.subjectCode,
                 subjectName: parameters.subjectName,
@@ -44,7 +45,8 @@ export const updateSbj = createAsyncThunk(
         subjectName: string,
         teacherEmail: string[]
     }) => {
-        await axios.patch(`https://sc-plagiarism-checker.herokuapp.com/subject/admin/${parameters.subjectId}`,
+        await axios.patch(
+            `https://sc-plagiarism-checker.herokuapp.com/subject/admin/${parameters.subjectId}`,
             {
                 subjectName: parameters.subjectName,
                 teachers: parameters.teacherEmail
@@ -73,6 +75,27 @@ export const getSbjList = createAsyncThunk(
     }
 );
 
+export const addStudent = createAsyncThunk(
+    "subject/addStudent",
+    async (parameters: {
+        jwtToken: string | null,
+        subjectCode: string | null
+    }) => {
+        const axiosResponse = await axios.post(
+            `https://sc-plagiarism-checker.herokuapp.com/subject/`,
+            {
+                subjectCode: parameters.subjectCode
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${parameters.jwtToken}`
+                }
+            }
+        );
+        return axiosResponse.data;
+    }
+);
+
 export const getAllSbjList = createAsyncThunk(
     "subjectList/getSubjectList",
     async (jwtToken: string | null) => {
@@ -90,7 +113,10 @@ export const getAllSbjList = createAsyncThunk(
 
 export const deleteSbj = createAsyncThunk(
     "subject/deleteSbj",
-    async (parameters: { jwtToken: string | null, subjectId: string | null }) => {
+    async (parameters: {
+        jwtToken: string | null,
+        subjectId: string | null
+    }) => {
         const axiosResponse = await axios.delete(
             `https://sc-plagiarism-checker.herokuapp.com/subject/admin/${parameters.subjectId}`,
             {
@@ -122,4 +148,3 @@ export const subjectListSlice = createSlice({
         }
     }
 });
-

@@ -16,7 +16,7 @@ export const AsgmtPage = () => {
     const jwtToken = useReduxSelector((s) => s.authentication.jwtToken);
     const loading = useReduxSelector((s) => s.assignmentList.loading);
     const assignmentList = useReduxSelector((s) => s.assignmentList.asgmtList);
-    const sbjList = useReduxSelector(s => s.subjectList.subjectList);
+    const sbjList = useReduxSelector((s) => s.subjectList.subjectList);
     let subjectId: string | undefined = undefined;
     if (sbjList) {
         for (const s of sbjList) {
@@ -30,7 +30,7 @@ export const AsgmtPage = () => {
         if (jwtToken) {
             dispatch(getAsgmtList({ jwtToken, subjectId }));
         }
-    }, [dispatch, jwtToken]);
+    }, [dispatch, jwtToken, subjectId]);
 
     if (loading) {
         return (
@@ -50,7 +50,12 @@ export const AsgmtPage = () => {
     return (
         <div className={styles["assign-container"]}>
             <div className={styles["teacherAssignTable-container"]}>
-                <AsgmtList subjectCode={subjectCode} subjectId={subjectId} loading={loading} assignmentList={assignmentList} />
+                <AsgmtList
+                    subjectCode={subjectCode}
+                    subjectId={subjectId}
+                    loading={loading}
+                    assignmentList={assignmentList}
+                />
                 <AsgmtCreator subjectId={subjectId} />
             </div>
         </div>
