@@ -1,0 +1,22 @@
+.input-box {
+  width: 300px;
+}
+
+.login-form {
+  position: absolute;
+  left: 24%;
+  top: 20%;
+  border: 1px solid black;
+  width: 900px;
+  height: 400px;
+  background-color: rgb(240, 242, 245);
+  opacity: 0.8;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+
+  background-size: 100%, 100%;
+  background: url("../../assets/images/register-background.png") no-repeat 0 -36px;
+}

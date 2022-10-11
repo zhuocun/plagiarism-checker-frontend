@@ -1,0 +1,10 @@
+.background {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    background: url("../../assets/images/register-background.png") no-repeat;
+    background-size: cover;
+    background-position: 0 -36px;
+
+}
