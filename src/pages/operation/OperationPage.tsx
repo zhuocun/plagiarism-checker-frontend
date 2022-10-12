@@ -110,9 +110,9 @@ export const OperationPage: React.FC = () => {
                   (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
                 }
               >
-                <Option value="pdf" key={1}>PDF</Option>
-                <Option value="java" key={2}>Java</Option>
-                <Option value="c" key={3}>C</Option>
+                <Option value=".pdf" key={1}>PDF</Option>
+                <Option value=".java" key={2}>Java</Option>
+                <Option value=".c" key={3}>C</Option>
               </Select>
             </div>
           </Col>
@@ -148,9 +148,9 @@ export const OperationPage: React.FC = () => {
             (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
           }
         >
-          <Option value="PDF" key={1}>PDF</Option>
-          <Option value="Java" key={2}>Java</Option>
-          <Option value="C" key={3}>C</Option>
+          <Option value="pdf" key={1}>PDF</Option>
+          <Option value="java" key={2}>Java</Option>
+          <Option value="c" key={3}>C</Option>
         </Select>
         {userType !== "student" ?
           <>

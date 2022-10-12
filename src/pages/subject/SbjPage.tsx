@@ -23,7 +23,7 @@ export const SbjPage: React.FC = () => {
                 dispatch(getSbjList(jwtToken));
             }
         }
-    }, [jwtToken, dispatch, userType]);
+    }, [jwtToken]);
 
     if (loading) {
         return (

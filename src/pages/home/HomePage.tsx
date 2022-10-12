@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import antdStyle from "../../App.css";
 import styles from "./HomePage.module.css";
 import { Header, Footer, Content, Sider } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useReduxSelector } from "../../redux/hooks";
 
 export const HomePage = () => {
