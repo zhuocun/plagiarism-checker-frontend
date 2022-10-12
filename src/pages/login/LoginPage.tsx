@@ -40,7 +40,8 @@ export const LoginPage = () => {
             username: values.username,
             password: values.password
         }));
-        if (error) {
+        if (error)  {
+            
             openNotification("Username or Password incorrect", "top");
         }
     };
@@ -52,6 +53,7 @@ export const LoginPage = () => {
     return (
         <div>
             <BackImg />
+             
             <Form
                 name="basic"
                 labelCol={{ span: 6 }}
@@ -89,8 +91,12 @@ export const LoginPage = () => {
                         Submit
                     </Button>
                     <Link to="/register" style={{ marginLeft: "10px" }}>Register for an account</Link>
+                    <Link to="/reset" style={{ marginLeft: "10px" }}>Forgot Password? </Link>
                 </Form.Item>
-                <Watermark top="24%" left="60%" />
+
+
+                <Watermark top="25%" left="60%" />
+                 
             </Form>
         </div>
     );

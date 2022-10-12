@@ -1,8 +1,4 @@
-.input-box {
-  width: 300px;
-}
-
-.login-form {
+.passwordReset-form {
   position: absolute;
   left: 24%;
   top: 20%;
@@ -13,4 +9,7 @@
   opacity: 0.8;
 }
 
- 
+.input-box {
+  width: 300px;
+  margin-right: 30px;
+}

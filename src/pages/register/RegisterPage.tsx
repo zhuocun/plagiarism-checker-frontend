@@ -42,6 +42,7 @@ export const RegisterPage: React.FC = () => {
                 openNotification("register unsuccessful", "top");
             }
         } catch (error: any) {
+            console.log(error)
             const errorCode = error.response.status;
             if (errorCode === "409") {
                 openNotification("this email has already been registered", "top");
@@ -146,7 +147,7 @@ export const RegisterPage: React.FC = () => {
                         register
                     </Button>
                 </Form.Item>
-                <Watermark top="24%" left="60%" />
+                <Watermark top="25%" left="60%" />
             </Form>
         </div>
     );

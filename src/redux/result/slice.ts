@@ -3,7 +3,7 @@ import axios from "axios";
 
 interface ResultState {
     loading: boolean;
-    error: string | null;
+    error: any;
     resultList: IResult[] | null;
 }
 
@@ -34,17 +34,15 @@ export const callChecker = createAsyncThunk(
     "check/callChecker",
     async (parameters: {
         jwtToken: string | null,
-        subjectCode: string | undefined,
-        assignmentName: string | undefined,
-        dataType: string,
-        datasets: string[] | undefined
+        assignmentId: string | undefined,
+        fileType: string | undefined,
+        granularity: string, 
     }) => {
-        await axios.post(`https://sc-plagiarism-checker.herokuapp.com/check/postCheckConfig`,
+        await axios.post(`https://sc-plagiarism-checker.herokuapp.com/check`,
             {
-                subjectCode: parameters.subjectCode,
-                assignment: parameters.assignmentName,
-                dataType: parameters.dataType,
-                datasets: parameters.datasets
+                assignmentId: parameters.assignmentId,
+                fileType: parameters.fileType,
+                granularity: parameters.granularity,
             },
             {
                 headers: {
@@ -57,12 +55,15 @@ export const callChecker = createAsyncThunk(
 
 export const getResultList = createAsyncThunk(
     "result/getResultList",
-    async (jwtToken: string | null) => {
+    async (parameters: {
+        jwtToken: string | null,
+        assigmentID: string
+    }) => {
         const axiosResponse = await axios.get(
-            `https://sc-plagiarism-checker.herokuapp.com/result/get-result-list`,
+            `https://sc-plagiarism-checker.herokuapp.com/result/list/${parameters.assigmentID}`,
             {
                 headers: {
-                    Authorization: `Bearer ${jwtToken}`
+                    Authorization: `Bearer ${parameters.jwtToken}`
                 }
             }
         );

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+ 
 import styles from "./AsgmtPage.module.css";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { getAsgmtList } from "../../redux/asgmt/slice";
@@ -30,7 +31,7 @@ export const AsgmtPage = () => {
         if (jwtToken) {
             dispatch(getAsgmtList({ jwtToken, subjectId }));
         }
-    }, [dispatch, jwtToken, subjectId]);
+    }, [dispatch, jwtToken]);
 
     if (loading) {
         return (

@@ -24,7 +24,6 @@ export const getAsgmtList = createAsyncThunk(
                 }
             }
         );
-        console.log(axiosResponse);
         return axiosResponse.data;
     }
 );

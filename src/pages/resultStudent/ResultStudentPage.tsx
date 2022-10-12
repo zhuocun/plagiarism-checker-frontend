@@ -17,8 +17,8 @@ export const ResultStudentPage: React.FC = () => {
 
     useEffect(() => {
         PubSub.publish("title", `Result`);
-        dispatch(getResultList(jwtToken));
-        dispatch(getResultText());
+        // dispatch(getResultList(jwtToken));
+        // dispatch(getResultText());
     }, [jwtToken])
 
     return (

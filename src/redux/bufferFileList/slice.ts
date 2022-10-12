@@ -60,9 +60,9 @@ export const bufferFileListSlice = createSlice({
             state.error = null;
             state.bufferFileList = action.payload;
         },
-        [getBufferFileList.rejected.type]: (state, action: PayloadAction<string | null>) => {
+        [getBufferFileList.rejected.type]: (state, action) => {
             state.loading = false;
-            state.error = action.payload;
+            state.error = action.payload.error;
         }
     }
 });

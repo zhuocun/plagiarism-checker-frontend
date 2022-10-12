@@ -3,7 +3,7 @@ import axios from "axios";
 
 interface AuthenticationState {
     loading: boolean;
-    error: string | null;
+    error: any;
     jwtToken: string | null;
     userType: string | null;
     userName: string | null;

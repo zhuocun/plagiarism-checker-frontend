@@ -8,6 +8,7 @@ import { subjectListSlice } from "./subject/slice";
 import { resultTextSlice } from "./resultText/slice";
 import { bufferFileListSlice } from "./bufferFileList/slice";
 import { dbSlice } from "./dataset/slice";
+import { userListSlice } from "./user/slice";
 
 const persistConfig = {
     key: "root",
@@ -23,6 +24,7 @@ const rootReducer = combineReducers(
         bufferFileList: bufferFileListSlice.reducer,
         result: resultSlice.reducer,
         resultText: resultTextSlice.reducer,
+        userList: userListSlice.reducer,
         db: dbSlice.reducer
     }
 );
