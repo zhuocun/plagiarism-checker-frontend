@@ -40,13 +40,13 @@ const UserUpdateButton: React.FC<{
         try {
             const result = await form.validateFields();
             setVisible(false);
-            const NewuserName = result["UserName"];
-            const Newrole = result["Role"];
-            const NewaccountStatus = result["accountStatus"];
+            const newUserName = result["UserName"];
+            const newRole = result["Role"];
+            const newAccountStatus = result["accountStatus"];
             const update = {
-                username: NewuserName,
-                role: Newrole,
-                accountStatus: NewaccountStatus
+                username: newUserName,
+                role: newRole,
+                accountStatus: newAccountStatus
             };
             if (jwtToken) {
                 await dispatch(updateUser({ jwtToken, userEmail, update }));
@@ -94,13 +94,12 @@ const UserUpdateButton: React.FC<{
                         layout="vertical"
                         form={form}
                         initialValues={{ UserName: userName, Role: role, accountStatus: accountStatus }}
-
                     >
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
                                     name="UserName"
-                                    label="user Name"
+                                    label="User Name"
                                     rules={[
                                         {
                                             required: true,
@@ -112,14 +111,13 @@ const UserUpdateButton: React.FC<{
                                         style={{
                                             width: "100%"
                                         }}
-
                                     />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
                                     name="Role"
-                                    label="role"
+                                    label="Role"
                                     rules={[
                                         {
                                             required: true
@@ -145,7 +143,6 @@ const UserUpdateButton: React.FC<{
                                     ]}
                                 >
                                     <Select defaultValue={accountStatus}>
-
                                         <Option value="active">active</Option>
                                         <Option value="disable">disable</Option>
                                     </Select>

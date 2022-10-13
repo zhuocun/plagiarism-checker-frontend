@@ -1,18 +1,10 @@
-import {
-    Button,
-    Col, DatePicker,
-    Drawer,
-    Form,
-    Input,
-    Row,
-    Space
-} from "antd";
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Space } from "antd";
 import { useForm } from "antd/es/form/Form";
 import React, { useState } from "react";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
-import { createAsgmt, getAsgmtList, updateAsgmt } from "../../redux/asgmt/slice";
+import { getAsgmtList, updateAsgmt } from "../../redux/asgmt/slice";
 
-const AsgmtUpdater: React.FC<{
+const AsgmtUpdateButton: React.FC<{
     subjectId: string | undefined,
     assignmentId: string | undefined,
     assignmentName: string,
@@ -20,15 +12,15 @@ const AsgmtUpdater: React.FC<{
     maxCheckingTimes: number,
     threshold: number
 }> = ({
-          subjectId,
-          assignmentId,
-          assignmentName,
-          dueDate,
-          maxCheckingTimes,
-          threshold
-      }) => {
+    subjectId,
+    assignmentId,
+    assignmentName,
+    dueDate,
+    maxCheckingTimes,
+    threshold
+}) => {
     const dispatch = useReduxDispatch();
-    const userType = useReduxSelector(s => s.authentication.userType);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const jwtToken = useReduxSelector((state) => state.authentication.jwtToken);
     const [visible, setVisible] = useState(false);
     const [form] = useForm();
@@ -45,16 +37,24 @@ const AsgmtUpdater: React.FC<{
         try {
             const result = await form.validateFields();
             setVisible(false);
-            const assignmentName = result["Assignment Name"];
-            const dueDate = result["Due Date"];
-            const maxCheckTimes = result["Max checking times"];
-            const threshold = result["Threshold"];
-            dispatch(updateAsgmt({ jwtToken, assignmentId, assignmentName, dueDate, maxCheckTimes, threshold }));
+            const assignmentName = result["assignmentName"];
+            const dueDate = result["dueDate"];
+            const maxCheckTimes = result["maxCheckingTimes"];
+            const threshold = result["threshold"];
+            dispatch(
+                updateAsgmt({
+                    jwtToken,
+                    assignmentId,
+                    assignmentName,
+                    dueDate,
+                    maxCheckTimes,
+                    threshold
+                })
+            );
             if (jwtToken) {
                 setTimeout(() => {
                     dispatch(getAsgmtList({ jwtToken, subjectId }));
                 }, 1500);
-
             }
         } catch (error) {
             return error;
@@ -78,32 +78,48 @@ const AsgmtUpdater: React.FC<{
                     extra={
                         <Space>
                             <Button onClick={onClose}>Cancel</Button>
-                            <Button type="primary" htmlType="submit" onClick={onClick}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                onClick={onClick}
+                            >
                                 Update
                             </Button>
                         </Space>
                     }
-
                 >
-                    <Form layout="vertical" form={form}>
+                    <Form
+                        layout="vertical"
+                        form={form}
+                        initialValues={{
+                            assignmentName: assignmentName,
+                            maxCheckingTimes: maxCheckingTimes,
+                            threshold: threshold.toString()
+                        }}
+                    >
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Assignment Name"
+                                    name="assignmentName"
                                     label="Assignment Name"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please enter assignment name"
+                                            message:
+                                                "Please enter assignment name"
                                         }
                                     ]}
                                 >
-                                    <Input placeholder={assignmentName} />
+                                    <Input
+                                        style={{
+                                            width: "100%"
+                                        }}
+                                    />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Due Date"
+                                    name="dueDate"
                                     label="Due Date"
                                     rules={[
                                         {
@@ -112,19 +128,23 @@ const AsgmtUpdater: React.FC<{
                                         }
                                     ]}
                                 >
-                                    <DatePicker style={{ width: "100%" }} placeholder={dueDate} />
+                                    <DatePicker
+                                        style={{ width: "100%" }}
+                                        placeholder={dueDate}
+                                    />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Max checking times"
+                                    name="maxCheckingTimes"
                                     label="Max checking times"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please input the max checking times"
+                                            message:
+                                                "Please input the max checking times"
                                         }
                                     ]}
                                 >
@@ -132,18 +152,18 @@ const AsgmtUpdater: React.FC<{
                                         style={{
                                             width: "100%"
                                         }}
-                                        placeholder={maxCheckingTimes.toString()}
                                     />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Threshold"
+                                    name="threshold"
                                     label="Threshold"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please input the threshold"
+                                            message:
+                                                "Please input the threshold"
                                         }
                                     ]}
                                 >
@@ -151,7 +171,6 @@ const AsgmtUpdater: React.FC<{
                                         style={{
                                             width: "100%"
                                         }}
-                                        placeholder={threshold.toString()}
                                     />
                                 </Form.Item>
                             </Col>
@@ -181,4 +200,4 @@ const AsgmtUpdater: React.FC<{
     }
 };
 
-export default AsgmtUpdater;
+export default AsgmtUpdateButton;

@@ -26,7 +26,6 @@ export const OperationPage: React.FC = () => {
     const [dataType, setDataType] = useState("");
     const [uploadedType, setUploadedType] = useState<string>("");
     const [datasets, setDatasets] = useState<string[]>([]);
-    const [threshold, setThreshold] = useState<string>("");
     const [granularity, setGranularity] = useState<string>("");
     let assignmentId: string | undefined = undefined;
     if (asgmtList) {
@@ -53,12 +52,9 @@ export const OperationPage: React.FC = () => {
         setUploadedType(value);
     };
 
-    const onSetThreshold = (value: string) => {
-        setThreshold(value);
-    };
-
     const onSetGranularity = (value: string) => {
         setGranularity(value);
+        console.log(granularity);
     };
 
     const onCheck = async () => {
@@ -103,7 +99,7 @@ export const OperationPage: React.FC = () => {
                             <Select
                                 className={styles.setter}
                                 showSearch
-                                placeholder="Set file type"
+                                placeholder="Select file type"
                                 onChange={onUploadedFileType}
                                 optionFilterProp="type"
                                 filterOption={(input, option) =>
@@ -174,29 +170,16 @@ export const OperationPage: React.FC = () => {
                             <Option value="java" key={2}>Java</Option>
                             <Option value="c" key={3}>C</Option>
                         </Select>
-
-                        <Select
-                            className={styles.setter}
-                            showSearch
-                            placeholder="Set threshold"
-                            onChange={onSetThreshold}
-                            optionFilterProp="type"
-                            filterOption={(input, option) =>
-                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-                            }
-                        >
-                            <Option value="10%" key={1}>10%</Option>
-                            <Option value="15%" key={2}>15%</Option>
-                            <Option value="20%" key={3}>20%</Option>
-                            <Option value="25%" key={4}>25%</Option>
-                        </Select>
                         <InputNumber placeholder="Set granularity" className={styles.setter}
                                      onChange={onSetGranularity}>
                         </InputNumber>
-
-                        <Button icon={<RightCircleOutlined />} onClick={onCheck}>
-                            Check
-                        </Button>
+                        {dataType.length && granularity !== "" ?
+                            <Button icon={<RightCircleOutlined />} onClick={onCheck}>
+                                Check
+                            </Button> : <Button disabled icon={<RightCircleOutlined />}>
+                                Check
+                            </Button>
+                        }
                     </Row>
                 </div>
                 : <div style={{ marginTop: 250, marginLeft: 750 }}>
@@ -215,10 +198,12 @@ export const OperationPage: React.FC = () => {
                             <Option value="java" key={2}>Java</Option>
                             <Option value="c" key={3}>C</Option>
                         </Select>
-
-                        <Button icon={<RightCircleOutlined />} onClick={onCheck}>
-                            Check
-                        </Button>
+                        {dataType.length ?
+                            <Button icon={<RightCircleOutlined />} onClick={onCheck}>
+                                Check
+                            </Button> : <Button disabled icon={<RightCircleOutlined />}>
+                                Check
+                            </Button>}
                     </Row>
 
                 </div>}

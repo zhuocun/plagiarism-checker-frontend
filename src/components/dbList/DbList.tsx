@@ -25,7 +25,9 @@ export const DbList: React.FC<PropsType> = ({
     const dispatch = useReduxDispatch();
     const onDelete = (datasetId: string) => {
         dispatch(deleteDb({ jwtToken, datasetId }));
-        dispatch(getDbList({ jwtToken, assignmentId }));
+        setTimeout(() => {
+            dispatch(getDbList({ jwtToken, assignmentId }));
+        }, 1500);
     };
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DbItem[]) => {

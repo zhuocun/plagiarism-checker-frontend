@@ -31,7 +31,7 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
         try {
             setVisible(false);
             const result = await form.validateFields();
-            const datasetName = result["Dataset Name"];
+            const datasetName = result["datasetName"];
             dispatch(
                 createDb({
                     jwtToken,
@@ -80,7 +80,7 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                name="Dataset Name"
+                                name="datasetName"
                                 label="Dataset Name"
                                 rules={[
                                     {
@@ -98,7 +98,7 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item name="File Type" label="File Type">
+                            <Form.Item name="fileType" label="File Type">
                                 <Select
                                     defaultValue="Select file type"
                                     onChange={onSelect}

@@ -1,13 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import {
-    Button,
-    Col,
-    Drawer,
-    Form,
-    Input,
-    Row,
-    Space
-} from "antd";
+import { Button, Col, Drawer, Form, Input, Row, Space } from "antd";
 import { useForm } from "antd/es/form/Form";
 import React, { useState } from "react";
 import { createSbj, getAllSbjList } from "../../redux/subject/slice";
@@ -15,7 +7,7 @@ import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 
 const SbjCreator: React.FC = () => {
     const dispatch = useReduxDispatch();
-    const userType = useReduxSelector(s => s.authentication.userType);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const jwtToken = useReduxSelector((state) => state.authentication.jwtToken);
     const [visible, setVisible] = useState(false);
     const [form] = useForm();
@@ -32,11 +24,13 @@ const SbjCreator: React.FC = () => {
         try {
             const result = await form.validateFields();
             setVisible(false);
-            const subjectCode = result["Subject Code"];
-            const subjectName = result["Subject Name"];
+            const subjectCode = result["subjectCode"];
+            const subjectName = result["subjectName"];
             const teacherEmail: string[] = [];
-            teacherEmail.push(result["Teacher Email"]);
-            dispatch(createSbj({ jwtToken, subjectCode, subjectName, teacherEmail }));
+            teacherEmail.push(result["teacherEmail"]);
+            dispatch(
+                createSbj({ jwtToken, subjectCode, subjectName, teacherEmail })
+            );
             if (jwtToken) {
                 setTimeout(() => {
                     dispatch(getAllSbjList(jwtToken));
@@ -50,7 +44,11 @@ const SbjCreator: React.FC = () => {
     if (userType === "admin") {
         return (
             <>
-                <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+                <Button
+                    type="primary"
+                    onClick={showDrawer}
+                    icon={<PlusOutlined />}
+                >
                     New Subject
                 </Button>
                 <Drawer
@@ -64,23 +62,27 @@ const SbjCreator: React.FC = () => {
                     extra={
                         <Space>
                             <Button onClick={onClose}>Cancel</Button>
-                            <Button type="primary" htmlType="submit" onClick={onClick}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                onClick={onClick}
+                            >
                                 Submit
                             </Button>
                         </Space>
                     }
-
                 >
                     <Form layout="vertical" form={form}>
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Subject Code"
+                                    name="subjectCode"
                                     label="Subject Code"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please enter subject code"
+                                            message:
+                                                "Please enter the subject code"
                                         }
                                     ]}
                                 >
@@ -94,12 +96,13 @@ const SbjCreator: React.FC = () => {
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Subject Name"
+                                    name="subjectName"
                                     label="Subject Name"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please enter Subject Name"
+                                            message:
+                                                "Please enter the subject name"
                                         }
                                     ]}
                                 >
@@ -113,17 +116,21 @@ const SbjCreator: React.FC = () => {
                             </Col>
                         </Row>
                         <Row gutter={16}>
-
                             <Col span={12}>
                                 <Form.Item
-                                    name="Teacher Email"
+                                    name="teacherEmail"
                                     label="Teacher's Email"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please input the Teacher Email"
+                                            message:
+                                                "Please input teacher's email"
                                         },
-                                        { type: "email", message: "it is not a valid email address" }
+                                        {
+                                            type: "email",
+                                            message:
+                                                "it is not a valid email address"
+                                        }
                                     ]}
                                 >
                                     <Input

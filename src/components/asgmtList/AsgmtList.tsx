@@ -3,7 +3,7 @@ import { Skeleton, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Link } from "react-router-dom";
 import AsgmtDelButton from "../asgmtDelButton/AsgmtDelButton";
-import AsgmtUpdater from "../asgmtUpdater/AsgmtUpdater";
+import AsgmtUpdateButton from "../asgmtUpdateButton/AsgmtUpdateButton";
 
 interface AsgmtIntro extends IAssignment {
     key: number;
@@ -49,9 +49,10 @@ export const AsgmtList: React.FC<PropsType> = ({
             render: (_, record) => (
                 <Space size="middle">
                     <Link to={`${record.assignmentName}`} replace={true}>Enter</Link>
-                    <AsgmtUpdater subjectId={subjectId} assignmentId={record._id} assignmentName={record.assignmentName}
-                                  dueDate={record.dueDate} maxCheckingTimes={record.maxCheckTimes}
-                                  threshold={record.threshold} />
+                    <AsgmtUpdateButton subjectId={subjectId} assignmentId={record._id}
+                                       assignmentName={record.assignmentName}
+                                       dueDate={record.dueDate} maxCheckingTimes={record.maxCheckTimes}
+                                       threshold={record.threshold} />
                     <AsgmtDelButton subjectId={subjectId} assignmentId={record._id} />
                 </Space>
             )

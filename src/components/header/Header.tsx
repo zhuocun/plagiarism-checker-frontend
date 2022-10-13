@@ -15,6 +15,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { authenticationSlice } from "../../redux/auth/slice";
 import { useNavigate } from "react-router-dom";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
+import watermark from "../../assets/images/watermark.png";
+import avatar from "../../assets/images/avatar.png";
 
 export const Header = () => {
     const userType = useReduxSelector((state) => state.authentication.userType);
@@ -56,14 +58,13 @@ export const Header = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
+                    <Avatar alt="M" src={watermark} />
                     <Typography
                         noWrap
                         component="a"
                         href="/"
                         sx={{
+                            marginLeft: 2,
                             fontSize: 15,
                             mr: 2,
                             display: { xs: "none", md: "flex" },
@@ -142,7 +143,7 @@ export const Header = () => {
                             textDecoration: "none"
                         }}
                     >
-                        LOGO
+                        Plagiarism Checker
                     </Typography>
                     <Box
                         sx={{
@@ -169,10 +170,7 @@ export const Header = () => {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
-                                />
+                                <Avatar alt="Avatar" src={avatar} />
                             </IconButton>
                         </Tooltip>
                         <Menu

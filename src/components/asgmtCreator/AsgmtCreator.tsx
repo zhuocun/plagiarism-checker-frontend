@@ -1,21 +1,15 @@
 import { PlusOutlined } from "@ant-design/icons";
-import {
-    Button,
-    Col, DatePicker,
-    Drawer,
-    Form,
-    Input,
-    Row,
-    Space
-} from "antd";
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Space } from "antd";
 import { useForm } from "antd/es/form/Form";
 import React, { useState } from "react";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { createAsgmt, getAsgmtList } from "../../redux/asgmt/slice";
 
-const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }) => {
+const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({
+    subjectId
+}) => {
     const dispatch = useReduxDispatch();
-    const userType = useReduxSelector(s => s.authentication.userType);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const jwtToken = useReduxSelector((state) => state.authentication.jwtToken);
     const [visible, setVisible] = useState(false);
     const [form] = useForm();
@@ -32,16 +26,24 @@ const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }
         try {
             const result = await form.validateFields();
             setVisible(false);
-            const assignmentName = result["Assignment Name"];
-            const dueDate = result["Due Date"];
-            const maxCheckTimes = result["Max checking times"];
-            const threshold = result["Threshold"];
-            dispatch(createAsgmt({ jwtToken, subjectId, assignmentName, dueDate, maxCheckTimes, threshold }));
+            const assignmentName = result["assignmentName"];
+            const dueDate = result["dueDate"];
+            const maxCheckTimes = result["maxCheckingTimes"];
+            const threshold = result["threshold"];
+            dispatch(
+                createAsgmt({
+                    jwtToken,
+                    subjectId,
+                    assignmentName,
+                    dueDate,
+                    maxCheckTimes,
+                    threshold
+                })
+            );
             if (jwtToken) {
                 setTimeout(() => {
                     dispatch(getAsgmtList({ jwtToken, subjectId }));
                 }, 1500);
-
             }
         } catch (error) {
             return error;
@@ -51,7 +53,11 @@ const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }
     if (userType !== "student") {
         return (
             <>
-                <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+                <Button
+                    type="primary"
+                    onClick={showDrawer}
+                    icon={<PlusOutlined />}
+                >
                     New Assignment
                 </Button>
                 <Drawer
@@ -65,32 +71,36 @@ const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }
                     extra={
                         <Space>
                             <Button onClick={onClose}>Cancel</Button>
-                            <Button type="primary" htmlType="submit" onClick={onClick}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                onClick={onClick}
+                            >
                                 Submit
                             </Button>
                         </Space>
                     }
-
                 >
                     <Form layout="vertical" form={form}>
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Assignment Name"
+                                    name="assignmentName"
                                     label="Assignment Name"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please enter assignment name"
+                                            message:
+                                                "Please enter the assignment name"
                                         }
                                     ]}
                                 >
-                                    <Input placeholder="Name" />
+                                    <Input placeholder="Assignment Name" />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Due Date"
+                                    name="dueDate"
                                     label="Due Date"
                                     rules={[
                                         {
@@ -106,12 +116,13 @@ const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Max checking times"
+                                    name="maxCheckingTimes"
                                     label="Max checking times"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please input the max checking times"
+                                            message:
+                                                "Please input the max checking times"
                                         }
                                     ]}
                                 >
@@ -125,12 +136,13 @@ const AsgmtCreator: React.FC<{ subjectId: string | undefined }> = ({ subjectId }
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="Threshold"
+                                    name="threshold"
                                     label="Threshold"
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please input the threshold"
+                                            message:
+                                                "Please input the threshold"
                                         }
                                     ]}
                                 >
