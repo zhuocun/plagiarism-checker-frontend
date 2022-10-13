@@ -1,13 +1,4 @@
-import {
-    Button,
-    Col,
-    Drawer,
-    Form,
-    Input,
-    Row,
-    Select,
-    Space
-} from "antd";
+import { Button, Col, Drawer, Form, Input, Row, Select, Space } from "antd";
 import React, { useState } from "react";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { useForm } from "antd/lib/form/Form";
@@ -41,12 +32,14 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
             setVisible(false);
             const result = await form.validateFields();
             const datasetName = result["Dataset Name"];
-            dispatch(createDb({
-                jwtToken,
-                assignmentId,
-                datasetName,
-                fileType
-            }));
+            dispatch(
+                createDb({
+                    jwtToken,
+                    assignmentId,
+                    datasetName,
+                    fileType
+                })
+            );
             if (jwtToken) {
                 setTimeout(() => {
                     dispatch(getDbList({ jwtToken, assignmentId }));
@@ -57,14 +50,13 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
         }
     };
 
-
     return (
         <>
             <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
                 Create
             </Button>
             <Drawer
-                title="Create new dataset"
+                title="Create a new dataset"
                 width={570}
                 onClose={onClose}
                 visible={visible}
@@ -74,7 +66,11 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
                 extra={
                     <Space>
                         <Button onClick={onClose}>Cancel</Button>
-                        <Button type="primary" htmlType="submit" onClick={onClick}>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            onClick={onClick}
+                        >
                             Create
                         </Button>
                     </Space>
@@ -102,11 +98,11 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item
-                                name="File Type"
-                                label="File Type"
-                            >
-                                <Select defaultValue="Select file type" onChange={onSelect}>
+                            <Form.Item name="File Type" label="File Type">
+                                <Select
+                                    defaultValue="Select file type"
+                                    onChange={onSelect}
+                                >
                                     <Option value="PDF">PDF</Option>
                                     <Option value="Java">Java</Option>
                                     <Option value="C">C</Option>

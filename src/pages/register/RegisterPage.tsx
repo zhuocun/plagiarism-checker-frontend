@@ -36,16 +36,15 @@ export const RegisterPage: React.FC = () => {
                 role: values.identity
             });
             if (result.status === 201) {
-                openNotification("register successful", "top");
+                openNotification("Register successful", "top");
                 navigate("/Login");
-            } else {
-                openNotification("register unsuccessful", "top");
             }
         } catch (error: any) {
-            console.log(error)
             const errorCode = error.response.status;
             if (errorCode === "409") {
-                openNotification("this email has already been registered", "top");
+                openNotification("This email has already been registered", "top");
+            } else {
+                openNotification("Sorry, register unsuccessful", "top");
             }
         }
     };

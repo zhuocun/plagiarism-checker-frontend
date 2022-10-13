@@ -1,11 +1,10 @@
 import React from "react";
 import { Skeleton, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { Link } from "react-router-dom";
-import UserUpdateButton from '../../components/userUpdateButton/UserUpdateButton'
+import UserUpdateButton from "../../components/userUpdateButton/UserUpdateButton";
 
 interface UserData extends IUser {
-    key: number
+    key: number;
 }
 
 interface PropsType {
@@ -14,9 +13,9 @@ interface PropsType {
 }
 
 export const UserList: React.FC<PropsType> = ({
-                                                 loading,
-                                                 userList
-                                             }) => {
+                                                  loading,
+                                                  userList
+                                              }) => {
     const columns: ColumnsType<UserData> = [
         {
             title: "User Name",
@@ -39,7 +38,7 @@ export const UserList: React.FC<PropsType> = ({
             key: "_id"
         },
         {
-            title: "AccountStatus",
+            title: "Account Status",
             dataIndex: "accountStatus",
             key: "accountStatus"
         },
@@ -48,13 +47,12 @@ export const UserList: React.FC<PropsType> = ({
             key: "action",
             render: (_, record) => (
                 <Space size="middle">
-                    
                     <UserUpdateButton
-                    userName={record.username}
-                    role={record.role}
-                    accountStatus={record.accountStatus}
-                    userEmail={record.email}
-                    /> 
+                        userName={record.username}
+                        role={record.role}
+                        accountStatus={record.accountStatus}
+                        userEmail={record.email}
+                    />
                 </Space>
             )
         }
@@ -63,7 +61,7 @@ export const UserList: React.FC<PropsType> = ({
     const Data: UserData[] = userList ?
         userList.map((s, index) => ({
             key: index,
-            ...s,
+            ...s
         })) : [];
 
     return (

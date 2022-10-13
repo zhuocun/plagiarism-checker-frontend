@@ -16,11 +16,11 @@ interface PropsType {
 }
 
 export const DbList: React.FC<PropsType> = ({
-                                                     loading,
-                                                     asgmtDbList,
-                                                     setDatasets,
-                                                     assignmentId
-                                                 }) => {
+                                                loading,
+                                                asgmtDbList,
+                                                setDatasets,
+                                                assignmentId
+                                            }) => {
     const jwtToken = useReduxSelector(s => s.authentication.jwtToken);
     const dispatch = useReduxDispatch();
     const onDelete = (datasetId: string) => {
@@ -45,7 +45,7 @@ export const DbList: React.FC<PropsType> = ({
 
     const columns: ColumnsType<DbItem> = [
         {
-            title: "Name",
+            title: "Dataset Name",
             dataIndex: "datasetName",
             key: "datasetName"
         },

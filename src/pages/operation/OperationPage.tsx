@@ -10,65 +10,65 @@ import { getDbList } from "../../redux/dataset/slice";
 import AsgmtDbCreator from "../../components/dbCreator/DbCreator";
 import { callChecker } from "../../redux/result/slice";
 import DbSelector from "../../components/dbSelector/DbSelector";
-import { UploadOutlined } from "@ant-design/icons";
+import { RightCircleOutlined, UploadOutlined } from "@ant-design/icons";
 
 export const OperationPage: React.FC = () => {
-  const { Option } = Select;
+    const { Option } = Select;
 
-  const jwtToken = useReduxSelector((s) => s.authentication.jwtToken) as string;
-  const bufferFileLoading = useReduxSelector((s) => s.bufferFileList.loading);
-  const bufferFileList = useReduxSelector((s) => s.bufferFileList.bufferFileList);
-  const dbLoading = useReduxSelector(s => s.db.loading);
-  const dbList = useReduxSelector(s => s.db.dbList);
-  const asgmtList = useReduxSelector(s => s.assignmentList.asgmtList);
-  const userType = useReduxSelector(s => s.authentication.userType);
-  const { subjectCode, assignmentName } = useParams();
-  const [dataType, setDataType] = useState("");
-  const [uploadedType, setUploadedType] = useState<string>("");
-  const [datasets, setDatasets] = useState<string[]>([]);
-  const [threshold, setThreshold] = useState<string>("");
-  const [granularity, setGranularity] = useState<string>("");
-  let assignmentId: string | undefined = undefined;
-  if (asgmtList) {
-    for (const a of asgmtList) {
-      if (a.assignmentName === assignmentName) {
-        assignmentId = a._id;
-      }
+    const jwtToken = useReduxSelector((s) => s.authentication.jwtToken) as string;
+    const bufferFileLoading = useReduxSelector((s) => s.bufferFileList.loading);
+    const bufferFileList = useReduxSelector((s) => s.bufferFileList.bufferFileList);
+    const dbLoading = useReduxSelector(s => s.db.loading);
+    const dbList = useReduxSelector(s => s.db.dbList);
+    const asgmtList = useReduxSelector(s => s.assignmentList.asgmtList);
+    const userType = useReduxSelector(s => s.authentication.userType);
+    const { assignmentName } = useParams();
+    const [dataType, setDataType] = useState("");
+    const [uploadedType, setUploadedType] = useState<string>("");
+    const [datasets, setDatasets] = useState<string[]>([]);
+    const [threshold, setThreshold] = useState<string>("");
+    const [granularity, setGranularity] = useState<string>("");
+    let assignmentId: string | undefined = undefined;
+    if (asgmtList) {
+        for (const a of asgmtList) {
+            if (a.assignmentName === assignmentName) {
+                assignmentId = a._id;
+            }
+        }
     }
-  }
-  const dispatch = useReduxDispatch();
-  useEffect(() => {
-    //PubSub.publish("title", assignmentName);
-    if (jwtToken) {
-      dispatch(getBufferFileList({ jwtToken, assignmentId }));
-      dispatch(getDbList({ jwtToken, assignmentId }));
-    }
-  }, [jwtToken, assignmentId]);
+    const dispatch = useReduxDispatch();
+    useEffect(() => {
+        //PubSub.publish("title", assignmentName);
+        if (jwtToken) {
+            dispatch(getBufferFileList({ jwtToken, assignmentId }));
+            dispatch(getDbList({ jwtToken, assignmentId }));
+        }
+    }, [jwtToken, assignmentId]);
 
-  const onSetDataType = (value: string) => {
-    setDataType(value);
-  };
+    const onSetDataType = (value: string) => {
+        setDataType(value);
+    };
 
-  const onUploadedFileType = (value: string) => {
-    setUploadedType(value);
-  };
+    const onUploadedFileType = (value: string) => {
+        setUploadedType(value);
+    };
 
-  const onSetThreshold = (value: string) => {
-    setThreshold(value);
-  };
+    const onSetThreshold = (value: string) => {
+        setThreshold(value);
+    };
 
-  const onSetGranularity = (value: string) => {
-    setGranularity(value);
-  };
+    const onSetGranularity = (value: string) => {
+        setGranularity(value);
+    };
 
-  const onCheck = async () => {
-    dispatch(callChecker({
-      jwtToken,
-      assignmentId,
-      granularity,
-      fileType: dataType
-    }));
-  };
+    const onCheck = async () => {
+        dispatch(callChecker({
+            jwtToken,
+            assignmentId,
+            granularity,
+            fileType: dataType
+        }));
+    };
 
     if (dbLoading || bufferFileLoading) {
         return (
@@ -85,109 +85,143 @@ export const OperationPage: React.FC = () => {
         );
     }
 
-  return (
-    <div>
-      {userType !== "student" ?
-        <Row>
-          <Col span={9} className={styles.table}>
-            <BufferFileList assignmentId={assignmentId} loading={bufferFileLoading}
-              bufferFileList={bufferFileList} />
-            <div className={styles.button}>
-              {uploadedType !== "" ?
-                <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
-                : <Button type={"dashed"} icon={<UploadOutlined />}>
-                  Upload
-                </Button>}
-            </div>
-            <div style={{ float: "right" }}>
-              <Select
-                className={styles.setter}
-                showSearch
-                placeholder="Set file type"
-                onChange={onUploadedFileType}
-                optionFilterProp="type"
-                filterOption={(input, option) =>
-                  (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-                }
-              >
-                <Option value=".pdf" key={1}>PDF</Option>
-                <Option value=".java" key={2}>Java</Option>
-                <Option value=".c" key={3}>C</Option>
-              </Select>
-            </div>
-          </Col>
-          <Col span={9} className={styles.table}>
-            <DbList
-              loading={dbLoading}
-              assignmentId={assignmentId}
-              asgmtDbList={dbList}
-              setDatasets={setDatasets}
-            />
-            <div className={styles.button}>
-              <AsgmtDbCreator assignmentId={assignmentId} />
-            </div>
-            <DbSelector assignmentId={assignmentId} datasets={datasets} />
-          </Col>
-        </Row> :
-        <div style={{ margin: "auto" }}>
-          <BufferFileList assignmentId={assignmentId} loading={bufferFileLoading}
-            bufferFileList={bufferFileList} />
-          <div className={styles.button}>
-            <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
-          </div>
+    return (
+        <div>
+            {userType !== "student" ?
+                <Row>
+                    <Col span={9} style={{ margin: "auto" }}>
+                        <BufferFileList assignmentId={assignmentId} loading={bufferFileLoading}
+                                        bufferFileList={bufferFileList} />
+                        <div className={styles.button}>
+                            {uploadedType !== "" ?
+                                <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
+                                : <Button disabled icon={<UploadOutlined />}>
+                                    Upload
+                                </Button>}
+                        </div>
+                        <div style={{ float: "right" }}>
+                            <Select
+                                className={styles.setter}
+                                showSearch
+                                placeholder="Set file type"
+                                onChange={onUploadedFileType}
+                                optionFilterProp="type"
+                                filterOption={(input, option) =>
+                                    (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                                }
+                            >
+                                <Option value=".pdf" key={1}>PDF</Option>
+                                <Option value=".java" key={2}>Java</Option>
+                                <Option value=".c" key={3}>C</Option>
+                            </Select>
+                        </div>
+                    </Col>
+                    <Col span={9} style={{ margin: "auto" }}>
+                        <DbList
+                            loading={dbLoading}
+                            assignmentId={assignmentId}
+                            asgmtDbList={dbList}
+                            setDatasets={setDatasets}
+                        />
+                        <div className={styles.button}>
+                            <AsgmtDbCreator assignmentId={assignmentId} />
+                        </div>
+                        <DbSelector assignmentId={assignmentId} datasets={datasets} />
+                    </Col>
+                </Row> :
+                <div style={{ margin: "auto" }}>
+                    <BufferFileList assignmentId={assignmentId} loading={bufferFileLoading}
+                                    bufferFileList={bufferFileList} />
+                    <div className={styles.button}>
+                        {uploadedType !== "" ?
+                            <UploadBox fileType={uploadedType} assignmentId={assignmentId} />
+                            : <Button disabled icon={<UploadOutlined />}>
+                                Upload
+                            </Button>}
+                    </div>
+                    <div style={{ float: "right" }}>
+                        <Select
+                            className={styles.setter}
+                            showSearch
+                            placeholder="Set file type"
+                            onChange={onUploadedFileType}
+                            optionFilterProp="type"
+                            filterOption={(input, option) =>
+                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            <Option value=".pdf" key={1}>PDF</Option>
+                            <Option value=".java" key={2}>Java</Option>
+                            <Option value=".c" key={3}>C</Option>
+                        </Select>
+                    </div>
+                </div>
+            }
+            {userType !== "student" ?
+                <div style={{ marginTop: 250, float: "right", marginRight: 64 }}>
+                    <Row>
+                        <Select
+                            className={styles.setter}
+                            showSearch
+                            placeholder="Set file type"
+                            onChange={onSetDataType}
+                            optionFilterProp="type"
+                            filterOption={(input, option) =>
+                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            <Option value="pdf" key={1}>PDF</Option>
+                            <Option value="java" key={2}>Java</Option>
+                            <Option value="c" key={3}>C</Option>
+                        </Select>
+
+                        <Select
+                            className={styles.setter}
+                            showSearch
+                            placeholder="Set threshold"
+                            onChange={onSetThreshold}
+                            optionFilterProp="type"
+                            filterOption={(input, option) =>
+                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            <Option value="10%" key={1}>10%</Option>
+                            <Option value="15%" key={2}>15%</Option>
+                            <Option value="20%" key={3}>20%</Option>
+                            <Option value="25%" key={4}>25%</Option>
+                        </Select>
+                        <InputNumber placeholder="Set granularity" className={styles.setter}
+                                     onChange={onSetGranularity}>
+                        </InputNumber>
+
+                        <Button icon={<RightCircleOutlined />} onClick={onCheck}>
+                            Check
+                        </Button>
+                    </Row>
+                </div>
+                : <div style={{ marginTop: 250, marginLeft: 750 }}>
+                    <Row>
+                        <Select
+                            className={styles.setter}
+                            showSearch
+                            placeholder="Set file type"
+                            onChange={onSetDataType}
+                            optionFilterProp="type"
+                            filterOption={(input, option) =>
+                                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            <Option value="pdf" key={1}>PDF</Option>
+                            <Option value="java" key={2}>Java</Option>
+                            <Option value="c" key={3}>C</Option>
+                        </Select>
+
+                        <Button icon={<RightCircleOutlined />} onClick={onCheck}>
+                            Check
+                        </Button>
+                    </Row>
+
+                </div>}
         </div>
-      }
-        <Row style={{ marginTop: 150, marginRight: 50, float: "right"  }}>
-        <Select
-          className={styles.setter}
-          showSearch
-          placeholder="Set file type"
-          onChange={onSetDataType}
-          optionFilterProp="type"
-          filterOption={(input, option) =>
-            (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-          }
-        >
-          <Option value="pdf" key={1}>PDF</Option>
-          <Option value="java" key={2}>Java</Option>
-          <Option value="c" key={3}>C</Option>
-        </Select>
-        {userType !== "student" ?
-          <>
-            <Select
-              className={styles.setter}
-              showSearch
-              placeholder="Set threshold"
-              onChange={onSetThreshold}
-              optionFilterProp="type"
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-              }
-            >
-              <Option value="10%" key={1}>10%</Option>
-              <Option value="15%" key={2}>15%</Option>
-              <Option value="20%" key={3}>20%</Option>
-              <Option value="25%" key={4}>25%</Option>
-            </Select>
-            <InputNumber placeholder="Input granularity" className={styles.setter} onChange={onSetGranularity}></InputNumber>
-            {/* <Select
-              className={styles.setter}
-              showSearch
-              placeholder="Set granularity"
-              onChange={onSetGranularity}
-              optionFilterProp="type"
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-              }
-            >
-              <Option value="paragraph" key={1}>paragraph</Option>
-              <Option value="sentence" key={2}>sentence</Option>
-            </Select> */}
-          </> : null}
-        <Button onClick={onCheck}>
-          Check
-        </Button>
-      </Row>
-    </div>
-  );
+    );
 };

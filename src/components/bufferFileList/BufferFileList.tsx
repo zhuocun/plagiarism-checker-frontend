@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, Skeleton, Space, Table } from "antd";
+import { Skeleton, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
-import { deleteBufferFile, getBufferFileList } from "../../redux/bufferFileList/slice";
+import BufferFileDelButton from "../bufferFileDelButton/BufferFileDelButton";
 
 interface bufferFileItem extends IBufferFile {
     key: number;
@@ -20,34 +19,26 @@ export const BufferFileList: React.FC<PropsType> = ({
                                                         bufferFileList,
                                                         assignmentId
                                                     }) => {
-
-    const dispatch = useReduxDispatch();
-    const jwtToken = useReduxSelector(s => s.authentication.jwtToken);
-    const onDelete = (fileId: string) => {
-        dispatch(deleteBufferFile({ jwtToken, fileId }));
-        setTimeout(() => {
-            dispatch(getBufferFileList({ jwtToken, assignmentId }));
-        }, 1200);
-
-    };
-
     const columns: ColumnsType<bufferFileItem> = [
-        {
-            title: "User Name",
-            dataIndex: "userName",
-            key: "userName"
-        },
         {
             title: "File Name",
             dataIndex: "fileName",
             key: "fileName"
         },
         {
+            title: "Uploader",
+            dataIndex: "userName",
+            key: "userName"
+        },
+        {
             title: "Action",
             key: "action",
             render: (_, record) => (
                 <Space size="middle">
-                    <Button danger type={"dashed"} onClick={() => onDelete(record._id)}>Delete</Button>
+                    <BufferFileDelButton
+                        assignmentId={assignmentId}
+                        fileId={record._id}
+                    />
                 </Space>
             )
         }
