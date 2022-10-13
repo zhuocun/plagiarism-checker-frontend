@@ -21,7 +21,7 @@ export const UploadBox: React.FC<{ assignmentId: string | undefined, fileType: s
     const onUpload = () => {
         setTimeout(() => {
             dispatch(getBufferFileList({ jwtToken, assignmentId }));
-        }, 1500);
+        }, 1900);
     };
     return (
         <Space
