@@ -12,3 +12,4 @@ export * from "./resultDetailList";
 export * from "./resultText";
 export * from "./sbjList";
 export * from "./userList"
+

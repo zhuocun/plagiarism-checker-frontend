@@ -9,12 +9,19 @@ import { resultTextSlice } from "./resultText/slice";
 import { bufferFileListSlice } from "./bufferFileList/slice";
 import { dbSlice } from "./dataset/slice";
 import { userListSlice } from "./user/slice";
+import { whiteListSlice } from "./whiteList/slice";
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
+import { resultDetailSlice } from "./resultDetail/slice";
 
 const persistConfig = {
     key: "root",
     storage,
     whiteList: ["user"]
 };
+
+const customizedMiddleware = getDefaultMiddleware({
+    serializableCheck: false
+})
 
 const rootReducer = combineReducers(
     {
@@ -25,7 +32,9 @@ const rootReducer = combineReducers(
         result: resultSlice.reducer,
         resultText: resultTextSlice.reducer,
         userList: userListSlice.reducer,
-        db: dbSlice.reducer
+        db: dbSlice.reducer,
+        whiteList: whiteListSlice.reducer,
+        resultDetail: resultDetailSlice.reducer
     }
 );
 
@@ -35,8 +44,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore(
     {
         reducer: persistedReducer,
-        devTools: true
-    }
+        devTools: true,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    },
+
 );
 
 const persistor = persistStore(store);

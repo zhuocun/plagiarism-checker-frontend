@@ -9,4 +9,5 @@ export * from "./subject";
 export * from "./sendLink";
 export * from './passwordReset'
 export * from './user'
-
+export * from './whiteList'
+export * from './resultDetail'

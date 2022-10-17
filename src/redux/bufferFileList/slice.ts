@@ -20,6 +20,7 @@ export const getBufferFileList = createAsyncThunk(
     }) => {
         const axiosResponse = await axios.get(
             `https://sc-plagiarism-checker.herokuapp.com/buffer/${parameters.assignmentId}`,
+
             {
                 headers: {
                     Authorization: `Bearer ${parameters.jwtToken}`

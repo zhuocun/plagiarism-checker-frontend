@@ -40,11 +40,10 @@ export const RegisterPage: React.FC = () => {
                 navigate("/Login");
             }
         } catch (error: any) {
+            console.log(error)
             const errorCode = error.response.status;
             if (errorCode === "409") {
-                openNotification("This email has already been registered", "top");
-            } else {
-                openNotification("Sorry, register unsuccessful", "top");
+                openNotification("this email has already been registered", "top");
             }
         }
     };

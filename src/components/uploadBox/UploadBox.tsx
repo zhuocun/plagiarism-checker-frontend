@@ -5,12 +5,12 @@ import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { HttpRequestHeader } from "antd/es/upload/interface";
 import { getBufferFileList } from "../../redux/bufferFileList/slice";
 
-export const UploadBox: React.FC<{ assignmentId: string | undefined, fileType: string }> = ({
-                                                                                                assignmentId,
-                                                                                                fileType
-                                                                                            }) => {
-    const jwtToken = useReduxSelector(s => s.authentication.jwtToken);
-    const userType = useReduxSelector(s => s.authentication.userType);
+export const UploadBox: React.FC<{
+    assignmentId: string | undefined,
+    fileType: string
+}> = ({ assignmentId, fileType }) => {
+    const jwtToken = useReduxSelector((s) => s.authentication.jwtToken);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const dispatch = useReduxDispatch();
     const headers: HttpRequestHeader = {
         Authorization: jwtToken ? `Bearer ${jwtToken}` : ""
@@ -50,6 +50,3 @@ export const UploadBox: React.FC<{ assignmentId: string | undefined, fileType: s
         </Space>
     );
 };
- 
-
- 

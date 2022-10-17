@@ -71,7 +71,10 @@ export const DbList: React.FC<PropsType> = ({
         asgmtDbList.map((d, index) => ({
             key: index,
             ...d
-        })) : [];
+        })).filter((d) => {
+            return d._id != "634d29967532fd785ea9dcaf"
+        }) : [];
+
 
     return (
         <Skeleton loading={loading} active>

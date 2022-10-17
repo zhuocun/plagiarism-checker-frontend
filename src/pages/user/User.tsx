@@ -4,7 +4,7 @@ import { getUserList } from "../../redux/user/slice";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { Spin } from "antd";
 
-export const UserManagementPage = () => {
+export const User = () => {
     const loading = useReduxSelector((s) => s.userList.loading);
     const userList = useReduxSelector((s) => s.userList.userList);
     const jwtToken = useReduxSelector((state) => state.authentication.jwtToken);

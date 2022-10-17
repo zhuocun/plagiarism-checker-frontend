@@ -86,6 +86,7 @@ export const deleteAsgmt = createAsyncThunk(
         jwtToken: string | null,
         assignmentId: string | undefined
     }) => {
+
         const axiosResponse = await axios.delete(
             `https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.assignmentId}`,
             {

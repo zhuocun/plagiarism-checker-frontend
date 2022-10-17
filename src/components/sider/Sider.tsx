@@ -46,7 +46,6 @@ export const Sider = () => {
     return (
         <PageSider width={200} theme={"light"}>
             <Menu theme="light"
-                  defaultSelectedKeys={["1"]}
                   mode="inline"
                   items={items}
                   style={{ marginTop: 25 }}

@@ -16,7 +16,6 @@ export const HomePage = () => {
     // );
     useEffect(() => {
         if (jwtToken !== null) {
-            navigate("/subject");
         } else {
             navigate("/login");
         }

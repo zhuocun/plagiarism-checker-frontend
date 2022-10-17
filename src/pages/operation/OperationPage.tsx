@@ -54,7 +54,7 @@ export const OperationPage: React.FC = () => {
 
     const onSetGranularity = (value: string) => {
         setGranularity(value);
-        console.log(granularity);
+
     };
 
     const onCheck = async () => {
@@ -198,6 +198,9 @@ export const OperationPage: React.FC = () => {
                             <Option value="java" key={2}>Java</Option>
                             <Option value="c" key={3}>C</Option>
                         </Select>
+                        <InputNumber placeholder="Set granularity" className={styles.setter}
+                                     onChange={onSetGranularity}>
+                        </InputNumber>
                         {dataType.length ?
                             <Button icon={<RightCircleOutlined />} onClick={onCheck}>
                                 Check

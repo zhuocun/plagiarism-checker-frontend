@@ -30,6 +30,7 @@ export const getResult = createAsyncThunk(
 );
  */
 
+
 export const getResultText = createAsyncThunk(
     "result/getResultText",
     async () => {

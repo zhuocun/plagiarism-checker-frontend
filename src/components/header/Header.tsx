@@ -20,7 +20,7 @@ import avatar from "../../assets/images/avatar.png";
 
 export const Header = () => {
     const userType = useReduxSelector((state) => state.authentication.userType);
-    const pages = userType === "admin" ? ["management"] : [];
+    const pages = userType === "admin" ? ["user", "whiteList"] : [];
     const settings = ["logout"];
     const navigate = useNavigate();
     const dispatch = useReduxDispatch();
@@ -42,7 +42,7 @@ export const Header = () => {
             dispatch(authenticationSlice.actions.logout());
             navigate("/login");
         } else {
-            navigate(`${page}`, { replace: true });
+            navigate(`${page}`);
         }
     };
 

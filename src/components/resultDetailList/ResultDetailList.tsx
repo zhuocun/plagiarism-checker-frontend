@@ -2,51 +2,34 @@ import React from "react";
 import {Skeleton, Table} from "antd";
 import type {ColumnsType} from 'antd/es/table';
 
+
 interface ResultItem {
-    submissionID: number,
-    submitter: string,
-    File: string,
-    uploadTime: string,
-    similarity: string,
-    PorF: "fail" | "pass"
+    similarTo: string,
+    authorName: string,
+    authorEmail: string
 }
 
 const columns: ColumnsType<ResultItem> = [
     {
-        title: "SubmissionID",
-        dataIndex: "submissionID",
-        key: "submissionID",
+        title: "Similar To",
+        dataIndex: "similarTo",
+        key: "similarTo",
     },
     {
-        title: "Submitter",
-        dataIndex: "submitter",
-        key: "submitter"
+        title: "Author Name",
+        dataIndex: "authorName",
+        key: "authorName"
     },
     {
-        title: "File",
-        dataIndex: "file",
-        key: "file",
-    },
-    {
-        title: "Upload Time",
-        dataIndex: "uploadTime",
-        key: "uploadTime",
-    },
-    {
-        title: "Similarity",
-        dataIndex: "similarity",
-        key: "similarity",
-    },
-    {
-        title: "P/F",
-        dataIndex: "PorF",
-        key: "PorF",
+        title: "Author Email",
+        dataIndex: "authorEmail",
+        key: "authorEmail",
     },
 ];
 
 interface PropsType {
     loading: boolean;
-    resultDetail: any;
+    resultDetail: IResultDetail | null;
 }
 
 export const ResultDetailList: React.FC<PropsType> = ({
@@ -55,15 +38,28 @@ export const ResultDetailList: React.FC<PropsType> = ({
                                                       }) => {
 
 
+
+        const data = resultDetail? resultDetail.source.map((item, index) => ({
+            similarTo: item.similarTo,
+            authorName: item.author.username,
+            authorEmail: item.author.email,
+            key: index
+        })) : []
+
     return (
-        <Skeleton loading={loading} active>
-            <Table<ResultItem>
-                columns={columns}
-                dataSource={resultDetail}
-                showHeader={true}
-                size="small"
-                bordered={false}
-            />
-        </Skeleton>
+        <div>
+            <Skeleton loading={loading} active>
+                <Table<ResultItem>
+                    columns={columns}
+                    dataSource={data}
+                    showHeader={true}
+                    size="small"
+                    bordered={false}
+                    pagination={false}
+                />
+            </Skeleton>
+
+        </div>
+
     );
 }
