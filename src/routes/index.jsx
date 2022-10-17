@@ -9,10 +9,11 @@ import {
   SbjPage,
   SendLink,
   PasswordReset,
-  User,
   WhiteList,
   ResultDetail
 } from "../pages";
+
+import { User } from "../pages/user/User"
 
 import { AsgmtPage } from "../pages/asgmt/AsgmtPage";
 

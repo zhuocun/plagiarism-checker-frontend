@@ -144,7 +144,7 @@ const UserUpdateButton: React.FC<{
                                 >
                                     <Select defaultValue={accountStatus}>
                                         <Option value="active">active</Option>
-                                        <Option value="disable">disable</Option>
+                                        <Option value="disabled">disable</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
