@@ -12,7 +12,7 @@ export const PasswordReset: React.FC = () => {
   const [form] = Form.useForm();
 
   const openNotification = (description: string, placement: NotificationPlacement) => {
-     
+
     notification.open(
       {
         message: "Notification",
@@ -39,9 +39,10 @@ export const PasswordReset: React.FC = () => {
         }
       )
       openNotification("your password has been reset","top")
-    } catch (e:any) {
       setLoading(false)
+    } catch (e:any) {
       openNotification(e.response.data.msg,"top")
+      setLoading(false)
     }
   }
 

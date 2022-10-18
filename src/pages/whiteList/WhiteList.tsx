@@ -70,7 +70,7 @@ export const WhiteList: React.FC = () => {
 
     return (
         <div>
-            <Title level={3}>Put Email to White List:</Title>
+            <Title level={3}>Whitelist the teacher's email :</Title>
             <Form style={{position: "relative", left: "20vw"}} form={form}>
                 <Form.Item
                     label="Email"

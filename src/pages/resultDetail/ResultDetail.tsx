@@ -41,6 +41,15 @@ export const ResultDetail: React.FC = () => {
     let setError = null;
     const setLoading = useReduxSelector( (s) => s.resultDetail.setLoading)
 
+    let failedId:string;
+
+    // @ts-ignore
+    for (let i of dbList) {
+        if (i.datasetName == "failedDataset") {
+            failedId = i._id
+
+        }
+    }
 
 
     useEffect(() => {
@@ -83,7 +92,7 @@ export const ResultDetail: React.FC = () => {
         if (jwtToken&&resultId) {
             dispatch(setResult({
                 jwtToken,
-                datasetId: "634d29967532fd785ea9dcaf",
+                datasetId: failedId,
                 resultId: resultId,
                 pof: "failed"
             }))
@@ -140,15 +149,15 @@ export const ResultDetail: React.FC = () => {
                 </div>
             </div>
             {
-                userType === "admin"? <div style={{float:"right", marginTop:"30px",  }}>
-                    <h2 style={{marginRight:"300px"}}>Your Choice:</h2>
+                (userType === "admin" || userType === "teacher")? <div style={{float:"right", marginTop:"30px",  }}>
+
 
                     <div style={{marginTop:"30px"}}>
-                        <h3 style={{display:"inline"}}>accept and put in dataSet: </h3>
+                        <h3 style={{display:"inline"}}>choose a dataset to save in:  </h3>
                         &nbsp;&nbsp;&nbsp;
                         <Select onChange={selectDataset}>
                             { dbList?.map((item) =>  {
-                                if(item._id != "634d29967532fd785ea9dcaf") {
+                                if(item.datasetName != "failedDataset") {
                                     return (
                                         <Option value={item._id} key={item._id}>{item.datasetName}</Option>
                                     )
@@ -156,15 +165,15 @@ export const ResultDetail: React.FC = () => {
                             } )}
                         </Select>
                         &nbsp;&nbsp;&nbsp;
-                        <Button type="primary" disabled={(selectedDataset==="")} onClick={setDataset}>accept and set</Button>
+                        <Button type="primary" disabled={(selectedDataset==="")} onClick={setDataset}>save</Button>
                         &nbsp;&nbsp;&nbsp;
 
                     </div>
 
                     <div style={{marginTop:"30px"}}>
-                        <h3 style={{display:"inline"}}>Reject</h3>
+
                         &nbsp;&nbsp;&nbsp;
-                        <Button danger onClick={Reject}>Reject</Button>
+                        <Button danger onClick={Reject}> tag as failed</Button>
 
                     </div>
                     <Spin spinning={setLoading} size="large" style={{position:"relative", top:"100px", left:"200px"}}/>

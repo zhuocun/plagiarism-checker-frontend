@@ -57,11 +57,11 @@ const routes = [
   },
 
   {
-    path: "login",
+    path: "/login",
     element: <LoginPage />
   },
   {
-    path: "/setPassword",
+    path: "/resetPassword",
     element: <PasswordReset />
   },
   {

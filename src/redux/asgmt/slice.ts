@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+    createSlice,
+    createAsyncThunk,
+    PayloadAction,
+    isRejectedWithValue
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface AsgmtState {
@@ -15,7 +20,10 @@ const initialState: AsgmtState = {
 
 export const getAsgmtList = createAsyncThunk(
     "assignmentList/getAssignmentList",
-    async (parameters: { jwtToken: string | null, subjectId: string | undefined }) => {
+    async (parameters: {
+        jwtToken: string | null,
+        subjectId: string | undefined
+    }) => {
         const axiosResponse = await axios.get(
             `https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.subjectId}`,
             {
@@ -38,7 +46,8 @@ export const createAsgmt = createAsyncThunk(
         threshold: number,
         maxCheckTimes: number
     }) => {
-        await axios.post(`https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.subjectId}`,
+        await axios.post(
+            `https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.subjectId}`,
             {
                 assignmentName: parameters.assignmentName,
                 dueDate: parameters.dueDate,
@@ -64,7 +73,8 @@ export const updateAsgmt = createAsyncThunk(
         threshold: number,
         maxCheckTimes: number
     }) => {
-        await axios.patch(`https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.assignmentId}`,
+        await axios.patch(
+            `https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.assignmentId}`,
             {
                 assignmentName: parameters.assignmentName,
                 dueDate: parameters.dueDate,
@@ -86,7 +96,6 @@ export const deleteAsgmt = createAsyncThunk(
         jwtToken: string | null,
         assignmentId: string | undefined
     }) => {
-
         const axiosResponse = await axios.delete(
             `https://sc-plagiarism-checker.herokuapp.com/assignment/${parameters.assignmentId}`,
             {
@@ -95,7 +104,7 @@ export const deleteAsgmt = createAsyncThunk(
                 }
             }
         );
-        return axiosResponse.data;
+        return axiosResponse;
     }
 );
 
@@ -112,10 +121,9 @@ export const assignmentListSlice = createSlice({
             state.error = null;
             state.asgmtList = action.payload;
         },
-        [getAsgmtList.rejected.type]: (state, action: PayloadAction<string | null>) => {
+        [getAsgmtList.rejected.type]: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         }
     }
 });
-

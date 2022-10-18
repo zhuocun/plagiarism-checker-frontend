@@ -44,7 +44,7 @@ export const SbjList: React.FC<PropsType> = ({
                     <SbjUpdateButton
                         subjectId={record._id}
                         subjectName={record.subjectName}
-                        email={"placeholder"}
+                        email={record.teachers[0].email}
                     />
                     <SbjDelButton subjectId={record._id} />
                 </Space>
@@ -60,7 +60,7 @@ export const SbjList: React.FC<PropsType> = ({
         })) : [];
 
     return (
-        <Skeleton loading={loading} active  >
+        <Skeleton loading={loading} active>
             <Table<SbjIntro>
                 columns={columns}
                 dataSource={sbjData}
