@@ -53,6 +53,7 @@ export const LoginPage = () => {
     return (
         <div>
             <BackImg />
+
             <Form
                 name="basic"
                 labelCol={{ span: 6 }}
@@ -64,6 +65,7 @@ export const LoginPage = () => {
                 className={styles["login-form"]}
                 form={form}
             >
+                <h1 style={{position:"absolute", top:-80, left: 250}}>SC-Quokka Plagiarism Checker</h1>
                 <Form.Item
                     label="Email"
                     name="username"
