@@ -1,8 +1,9 @@
 import { selectDatasets } from "../../redux/dataset/slice";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import React from "react";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { SafetyCertificateOutlined } from "@ant-design/icons";
+import { NotificationPlacement } from "antd/es/notification";
 
 const DbSelector: React.FC<{
     datasets: string[],
@@ -10,6 +11,17 @@ const DbSelector: React.FC<{
 }> = ({ datasets, assignmentId }) => {
     const dispatch = useReduxDispatch();
     const jwtToken = useReduxSelector((s) => s.authentication.jwtToken);
+    const openNotification = (
+        description: string,
+        placement: NotificationPlacement
+    ) => {
+        notification.open({
+            message: "Notification",
+            placement,
+            description,
+            duration: 1.2
+        });
+    };
     if (datasets.length) {
         return (
             <Button
@@ -19,7 +31,9 @@ const DbSelector: React.FC<{
                 onClick={() =>
                     dispatch(
                         selectDatasets({ jwtToken, datasets, assignmentId })
-                    )
+                    ).then(() => {
+                        openNotification("Operation Successful", "top");
+                    })
                 }
             >
                 Set Datasets
