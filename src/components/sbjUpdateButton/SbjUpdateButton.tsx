@@ -32,12 +32,7 @@ const SbjUpdateButton: React.FC<{
             teacherEmail.push(result["teacherEmail"]);
             dispatch(
                 updateSbj({ jwtToken, subjectId, subjectName, teacherEmail })
-            );
-            if (jwtToken) {
-                setTimeout(() => {
-                    dispatch(getAllSbjList(jwtToken));
-                }, 1500);
-            }
+            ).then(() => dispatch(getAllSbjList(jwtToken)));
         } catch (error) {
             return error;
         }

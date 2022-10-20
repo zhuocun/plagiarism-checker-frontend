@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 interface ResultState {
     loading: boolean;
@@ -36,13 +36,14 @@ export const callChecker = createAsyncThunk(
         jwtToken: string | null,
         assignmentId: string | undefined,
         fileType: string | undefined,
-        granularity: string, 
+        granularity: string
     }) => {
-        await axios.post(`https://sc-plagiarism-checker.herokuapp.com/check`,
+        const response: AxiosResponse = await axios.post(
+            `https://sc-plagiarism-checker.herokuapp.com/check`,
             {
                 assignmentId: parameters.assignmentId,
                 fileType: parameters.fileType,
-                granularity: parameters.granularity,
+                granularity: parameters.granularity
             },
             {
                 headers: {
@@ -50,15 +51,13 @@ export const callChecker = createAsyncThunk(
                 }
             }
         );
+        return response;
     }
 );
 
 export const getResultList = createAsyncThunk(
     "result/getResultList",
-    async (parameters: {
-        jwtToken: string | null,
-        assigmentID: string
-    }) => {
+    async (parameters: { jwtToken: string | null, assigmentID: string }) => {
         const axiosResponse = await axios.get(
             `https://sc-plagiarism-checker.herokuapp.com/result/list/${parameters.assigmentID}`,
             {
@@ -84,10 +83,12 @@ export const resultSlice = createSlice({
             state.error = null;
             state.resultList = action.payload;
         },
-        [getResultList.rejected.type]: (state, action: PayloadAction<string | null>) => {
+        [getResultList.rejected.type]: (
+            state,
+            action: PayloadAction<string | null>
+        ) => {
             state.loading = false;
             state.error = action.payload;
         }
     }
 });
-

@@ -4,10 +4,9 @@ export * from "./register";
 export * from "./asgmt";
 export * from "./resultList";
 export * from "./operation";
-export * from "./resultStudent";
 export * from "./subject";
 export * from "./sendLink";
-export * from './passwordReset'
-export * from './user'
-export * from './whiteList'
-export * from './resultDetail'
+export * from "./passwordReset";
+export * from "./user";
+export * from "./whiteList";
+export * from "./resultDetail";

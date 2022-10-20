@@ -49,8 +49,7 @@ const UserUpdateButton: React.FC<{
                 accountStatus: newAccountStatus
             };
             if (jwtToken) {
-                await dispatch(updateUser({ jwtToken, userEmail, update }));
-                dispatch(getUserList(jwtToken));
+                await dispatch(updateUser({ jwtToken, userEmail, update })).then(() => dispatch(getUserList(jwtToken)));
             }
             // const subjectName = result["Subject Name"];
             // const teacherEmail: string[] = [];

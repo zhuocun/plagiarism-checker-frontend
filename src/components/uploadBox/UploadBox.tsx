@@ -4,6 +4,7 @@ import React from "react";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import { HttpRequestHeader } from "antd/es/upload/interface";
 import { getBufferFileList } from "../../redux/bufferFileList/slice";
+import { UploadChangeParam } from "antd/lib/upload";
 
 export const UploadBox: React.FC<{
     assignmentId: string | undefined,
@@ -18,10 +19,10 @@ export const UploadBox: React.FC<{
     const data = {
         fileType: fileType.slice(1)
     };
-    const onUpload = () => {
-        setTimeout(() => {
+    const onUpload = (info: UploadChangeParam) => {
+        if (info.file.status === "done") {
             dispatch(getBufferFileList({ jwtToken, assignmentId }));
-        }, 1900);
+        }
     };
     return (
         <Space

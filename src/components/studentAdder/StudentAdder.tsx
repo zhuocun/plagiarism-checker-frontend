@@ -23,12 +23,9 @@ const StudentAdder: React.FC = () => {
             setVisible(false);
             const result = await form.validateFields();
             const subjectCode = result["Subject Code"];
-            dispatch(addStudent({ jwtToken, subjectCode }));
-            if (jwtToken) {
-                setTimeout(() => {
-                    dispatch(getSbjList(jwtToken));
-                }, 1500);
-            }
+            dispatch(addStudent({ jwtToken, subjectCode })).then(() =>
+                dispatch(getSbjList(jwtToken))
+            );
         } catch (error) {
             return error;
         }

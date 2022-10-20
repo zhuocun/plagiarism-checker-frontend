@@ -39,12 +39,7 @@ const DbCreator: React.FC<PropsType> = ({ assignmentId }) => {
                     datasetName,
                     fileType
                 })
-            );
-            if (jwtToken) {
-                setTimeout(() => {
-                    dispatch(getDbList({ jwtToken, assignmentId }));
-                }, 1500);
-            }
+            ).then(() => dispatch(getDbList({ jwtToken, assignmentId })));
         } catch (error) {
             return error;
         }

@@ -4,18 +4,19 @@ import { deleteSbj, getAllSbjList } from "../../redux/subject/slice";
 import { Button } from "antd";
 
 const SbjDelButton: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-    const jwtToken = useReduxSelector(s => s.authentication.jwtToken);
-    const userType = useReduxSelector(s => s.authentication.userType);
+    const jwtToken = useReduxSelector((s) => s.authentication.jwtToken);
+    const userType = useReduxSelector((s) => s.authentication.userType);
     const dispatch = useReduxDispatch();
     const onDelete = () => {
-        dispatch(deleteSbj({ jwtToken, subjectId }));
-        setTimeout(() => {
-            dispatch(getAllSbjList(jwtToken));
-        }, 1500);
+        dispatch(deleteSbj({ jwtToken, subjectId })).then(() =>
+            dispatch(getAllSbjList(jwtToken))
+        );
     };
     if (userType === "admin") {
         return (
-            <Button danger type="dashed" onClick={onDelete}>Delete</Button>
+            <Button danger type="dashed" onClick={onDelete}>
+                Delete
+            </Button>
         );
     } else {
         return <></>;

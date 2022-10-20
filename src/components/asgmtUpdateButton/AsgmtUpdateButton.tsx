@@ -50,12 +50,7 @@ const AsgmtUpdateButton: React.FC<{
                     maxCheckTimes,
                     threshold
                 })
-            );
-            if (jwtToken) {
-                setTimeout(() => {
-                    dispatch(getAsgmtList({ jwtToken, subjectId }));
-                }, 1500);
-            }
+            ).then(() => dispatch(getAsgmtList({ jwtToken, subjectId })));
         } catch (error) {
             return error;
         }

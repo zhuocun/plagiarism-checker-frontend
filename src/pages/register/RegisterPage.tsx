@@ -29,16 +29,17 @@ export const RegisterPage: React.FC = () => {
         identity: string
     }) => {
         try {
-            const result = await axios.post("https://sc-plagiarism-checker.herokuapp.com/auth/register", {
+            await axios.post("https://sc-plagiarism-checker.herokuapp.com/auth/register", {
                 email: values.email,
                 username: values.username,
                 password: values.password,
                 role: values.identity
+            }).then((result) => {
+                if (result.status === 201) {
+                    openNotification("Register successful", "top");
+                    navigate("/Login");
+                }
             });
-            if (result.status === 201) {
-                openNotification("Register successful", "top");
-                navigate("/Login");
-            }
         } catch (error: any) {
             openNotification(error.response.data.msg, "top");
         }

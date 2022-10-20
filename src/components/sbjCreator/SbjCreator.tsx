@@ -30,12 +30,7 @@ const SbjCreator: React.FC = () => {
             teacherEmail.push(result["teacherEmail"]);
             dispatch(
                 createSbj({ jwtToken, subjectCode, subjectName, teacherEmail })
-            );
-            if (jwtToken) {
-                setTimeout(() => {
-                    dispatch(getAllSbjList(jwtToken));
-                }, 1500);
-            }
+            ).then(() => dispatch(getAllSbjList(jwtToken)));
         } catch (error) {
             return error;
         }

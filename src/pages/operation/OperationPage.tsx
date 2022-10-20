@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { DbList, UploadBox } from "../../components";
 import { useReduxDispatch, useReduxSelector } from "../../redux/hooks";
 import styles from "./OperationPage.module.css";
-import { Button, Col, InputNumber, Row, Select, Spin } from "antd";
+import { Button, Col, InputNumber, notification, Row, Select, Spin } from "antd";
 import { BufferFileList } from "../../components/bufferFileList/BufferFileList";
 import { getBufferFileList } from "../../redux/bufferFileList/slice";
 import { getDbList } from "../../redux/dataset/slice";
@@ -11,6 +11,7 @@ import AsgmtDbCreator from "../../components/dbCreator/DbCreator";
 import { callChecker } from "../../redux/result/slice";
 import DbSelector from "../../components/dbSelector/DbSelector";
 import { RightCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import { NotificationPlacement } from "antd/es/notification";
 
 export const OperationPage: React.FC = () => {
     const { Option } = Select;
@@ -35,6 +36,16 @@ export const OperationPage: React.FC = () => {
             }
         }
     }
+    const openNotification = (description: string, placement: NotificationPlacement) => {
+        notification.open(
+            {
+                message: "Notification",
+                placement,
+                description,
+                duration: 1.2
+            }
+        );
+    };
     const dispatch = useReduxDispatch();
     useEffect(() => {
         //PubSub.publish("title", assignmentName);
@@ -63,7 +74,15 @@ export const OperationPage: React.FC = () => {
             assignmentId,
             granularity,
             fileType: dataType
-        }));
+        })).then((r: any) => {
+            try {
+                if (r.payload.status === 200) {
+                    openNotification("Operation successful", "top");
+                }
+            } catch (e) {
+                openNotification("Operation failed", "top");
+            }
+        });
     };
 
     if (dbLoading || bufferFileLoading) {

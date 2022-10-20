@@ -14,10 +14,14 @@ const BufferFileDelButton: React.FC<{
     const jwtToken = useReduxSelector((s) => s.authentication.jwtToken);
     const dispatch = useReduxDispatch();
     const onDelete = (fileId: string) => {
-        dispatch(deleteBufferFile({ jwtToken, fileId }));
-        setTimeout(() => {
-            dispatch(getBufferFileList({ jwtToken, assignmentId }));
-        }, 1500);
+        dispatch(deleteBufferFile({ jwtToken, fileId })).then(() =>
+            dispatch(
+                getBufferFileList({
+                    jwtToken,
+                    assignmentId
+                })
+            )
+        );
     };
 
     if (userType === "student") {
